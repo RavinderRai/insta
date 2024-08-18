@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "insta"
+version = "0.1.0"
+description = "insta using crewAI"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<=3.13"
+crewai = { extras = ["tools"], version = "^0.51.0" }
+
+[tool.poetry.scripts]
+insta = "insta.main:run"
+run_crew = "insta.main:run"
+train = "insta.main:train"
+replay = "insta.main:replay"
+test = "insta.main:test"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
