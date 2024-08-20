@@ -1,5 +1,6 @@
 from crewai import Agent, Crew, Process, Task
 from crewai.project import CrewBase, agent, crew, task
+from insta.tools.search import SearchTools
 
 # Uncomment the following line to use an example of a custom tool
 # from insta.tools.custom_tool import MyCustomTool
@@ -17,7 +18,11 @@ class InstaCrew():
 	def market_researcher(self) -> Agent:
 		return Agent(
 			config=self.agents_config['market_researcher'],
-			tools=[],
+			tools=[
+				SearchTools.search_internet,
+				SearchTools.search_instagram,
+				SearchTools.open_page
+				],
 			verbose=True
 		)
 	
@@ -44,31 +49,31 @@ class InstaCrew():
 		)
 
 	@task 
-	def market_researcher(self) -> Task:
+	def market_research(self) -> Task:
 		return Task(
 			config=self.tasks_config["market_research"],
-			agent=self.market_researcher,
+			agent=self.market_researcher(),
 			output_file="market_research.md"
 		)
 	
 	@task
 	def content_strategy_task(self) -> Task:
 		return Task(
-			config=self.tasks_config["content_strategy_task"],
+			config=self.tasks_config["content_strategy"],
 			agent=self.content_strategist()
 		)
 	
 	@task
 	def visual_content_creation_task(self) -> Task:
 		return Task(
-			config=self.tasks_config["visual_content_creation_task"],
+			config=self.tasks_config["visual_content_creation"],
 			agent=self.visual_creator(),
 		)
 	
 	@task
 	def visual_copy_writing_task(self) -> Task:
 		return Task(
-			config=self.tasks_config["copy_writing_task"],
+			config=self.tasks_config["copywriting"],
 			agent=self.copywriter(),
 		)
 	
@@ -87,6 +92,6 @@ class InstaCrew():
 			agents=self.agents, # Automatically created by the @agent decorator
 			tasks=self.tasks, # Automatically created by the @task decorator
 			process=Process.sequential,
-			verbose=2, #default value was True
+			verbose=True, #default value was True
 			# process=Process.hierarchical, # In case you wanna use that instead https://docs.crewai.com/how-to/Hierarchical/
 		)

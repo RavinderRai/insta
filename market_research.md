@@ -1,0 +1,1 @@
+The report includes detailed information on trends, hashtags, and competitor activities related to castles on Instagram, along with actionable recommendations for content creation.
